@@ -1,0 +1,51 @@
+.dashboard-container {
+  max-width: 400px;
+  margin: 60px auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+}
+
+.dashboard-container h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.record-form .form-group {
+  margin-bottom: 15px;
+}
+
+.record-form label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.record-form select,
+.record-form input[type="text"] {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
+}
+
+.record-form .error {
+  color: red;
+  font-size: 12px;
+}
+
+.record-form button {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.record-form button:hover {
+  background-color: #0056b3;
+}

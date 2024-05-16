@@ -1,0 +1,46 @@
+.record-list-container {
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+.record-table {
+  width: 100%;
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+.record-table th,
+.record-table td {
+  padding: 12px;
+  border: 1px solid #ddd;
+  text-align: left;
+}
+
+.record-table th {
+  background-color: #f2f2f2;
+  font-weight: bold;
+}
+
+.record-table tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+.record-table tr:hover {
+  background-color: #ddd;
+}
+
+.action-icons {
+  display: flex;
+  justify-content: space-around;
+}
+
+.action-icons i {
+  margin: 0 5px;
+  cursor: pointer;
+}
+
+@media (max-width: 600px) {
+  .record-table {
+    font-size: 12px;
+  }
+}
