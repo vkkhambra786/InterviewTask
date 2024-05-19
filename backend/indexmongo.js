@@ -241,3 +241,72 @@ const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
+
+
+// app.post("/api/signup", async (req, res) => {
+//   try {
+//     const { email, password } = req.body;
+
+//     // Check if email already exists
+//     const existingUser = await User.findOne({ where: { email } });
+//     if (existingUser) {
+//       return res.status(400).json({ error: "Email already exists" });
+//     }
+
+//     // Hash the password
+//     const hashedPassword = await bcrypt.hash(password, 10);
+
+//     // Create a new user
+//     const user = await User.create({ email, password: hashedPassword });
+
+//     res.status(201).json({ data: user, message: "User created successfully" });
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).json({ error: "Internal server error" });
+//   }
+// });
+
+// app.post("/api/login", async (req, res) => {
+//   try {
+//     const { email, password } = req.body;
+//     const user = await User.findOne({ where: { email } });
+//     if (!user) {
+//       return res.status(401).json({ error: "Invalid email or password" });
+//     }
+//     const isValidPassword = await bcrypt.compare(password, user.password);
+//     if (!isValidPassword) {
+//       return res.status(401).json({ error: "Invalid email or password" });
+//     }
+//     const token = jwt.sign({ userId: user.id }, secretKey, {
+//       expiresIn: "24h",
+//     });
+//     res.json({ message: "User Login successfully", token, data: user });
+//   } catch (error) {
+//     console.error("Error:", error);
+//     res.status(500).json({ error: "Internal server error" });
+//   }
+// });
+
+// Middleware for JWT authentication
+// const authenticateToken = (req, res, next) => {
+//   const authHeader = req.headers["authorization"];
+
+//   if (!authHeader) {
+//     console.log("No token provided");
+//     return res.status(401).json({ error: "Unauthorized authentication" });
+//   }
+
+//   const token = authHeader.split(" ")[1];
+
+//   jwt.verify(token, secretKey, (err, user) => {
+//     if (err) {
+//       if (err.name === "TokenExpiredError") {
+//         return res.status(401).json({ error: "Token expired" });
+//       }
+//       console.error("JWT Verification Error:", err);
+//       return res.status(403).json({ error: "Forbidden" });
+//     }
+//     req.user = user;
+//     next();
+//   });
+// };

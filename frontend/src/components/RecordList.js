@@ -25,7 +25,9 @@ const RecordList = () => {
       await axios.delete(`http://localhost:3001/api/records/${id}`, config);
 
       // Update state or re-fetch records to reflect changes
-      setRecords(records.filter((record) => record._id !== id));
+      setRecords((prevRecords) =>
+        prevRecords.filter((record) => record.id !== id && record._id !== id)
+      );
     } catch (error) {
       console.error("Error deleting record:", error);
       // Handle error
@@ -68,7 +70,7 @@ const RecordList = () => {
         </thead>
         <tbody>
           {records.map((record) => (
-            <tr key={record._id}>
+            <tr key={record.id || record._id}>
               <td>{record.type}</td>
               <td>{record.amount}</td>
               <td>{record.description}</td>
@@ -80,7 +82,7 @@ const RecordList = () => {
                   />
                   <FaTrash
                     style={{ cursor: "pointer" }}
-                    onClick={() => handleDelete(record._id)}
+                    onClick={() => handleDelete(record.id || record._id)}
                   />
                 </span>
               </td>

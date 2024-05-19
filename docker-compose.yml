@@ -1,0 +1,39 @@
+version: "3.8"
+
+services:
+  postgres:
+    image: postgres
+    environment:
+      POSTGRES_DB: Recordss
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: vikas123
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  backend:
+    build: C:\Users\Anil\Desktop\vikabal\Interviewtask\InterviewTask\backend
+    environment:
+      DATABASE_URL: postgres://postgres:vikas123@postgres:5432/Recordss
+      NODE_ENV: production
+    ports:
+      - "3001:3001"
+    depends_on:
+      - postgres
+    volumes:
+      - C:\Users\Anil\Desktop\vikabal\Interviewtask\InterviewTask\backend:/usr/src/app
+    container_name: backend-container
+
+  frontend:
+    build: C:\Users\Anil\Desktop\vikabal\Interviewtask\InterviewTask\frontend
+    ports:
+      - "3000:3000"
+    environment:
+      NODE_ENV: production
+    volumes:
+      - C:\Users\Anil\Desktop\vikabal\Interviewtask\InterviewTask\frontend:/usr/src/app
+    container_name: frontend-container
+
+volumes:
+  postgres_data:

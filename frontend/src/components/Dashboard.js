@@ -227,17 +227,20 @@ const Dashboard = () => {
       const config = {
         headers: {
           Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
         },
       };
 
       if (record) {
         // If record data is passed, call the update API (PUT)
-        await axios.put(
-          `http://localhost:3001/api/recordsUp/${record._id}`,
+        console.log(`Updating record with ID: ${record.id}`);
+        const response = await axios.put(
+          `http://localhost:3001/api/records/${record.id}`,
           formData,
           config
         );
         // Show success message for update
+        console.log("Update Response:", response.data);
         alert("Record updated successfully!");
       } else {
         // If no record data is passed, call the create API (POST)
