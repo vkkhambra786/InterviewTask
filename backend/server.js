@@ -1,3 +1,6 @@
+
+
+
 const express = require("express");
 const argon2 = require("argon2");
 const jwt = require("jsonwebtoken");
@@ -11,11 +14,22 @@ require("dotenv").config();
 // Initialize Express app
 const app = express();
 app.use(bodyParser.json());
-app.use(cors());
-
+ 
+//app.use(cors())
+const allowedOrigins = ["http://localhost:3000", "http://localhost:8080"];
 app.use(
   cors({
-    origin: "http://localhost:3001",
+    origin: function (origin, callback) {
+      // Allow requests with no origin, e.g., mobile apps or curl requests
+      if (!origin) return callback(null, true);
+      if (allowedOrigins.indexOf(origin) === -1) {
+        const msg =
+          "The CORS policy for this site does not " +
+          "allow access from the specified Origin.";
+        return callback(new Error(msg), false);
+      }
+      return callback(null, true);
+    },
     methods: ["GET", "POST", "PUT", "DELETE"],
     allowedHeaders: ["Content-Type", "Authorization"],
   })
@@ -89,7 +103,7 @@ const authenticateToken = (req, res, next) => {
   }
 
   const token = authHeader.split(" ")[1];
-
+  console.log("Received token:", token);
   jwt.verify(token, secretKey, (err, decoded) => {
     if (err) {
       if (err.name === "TokenExpiredError") {

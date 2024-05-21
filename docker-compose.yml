@@ -1,39 +1,41 @@
-version: "3.8"
+version: '3.8'
 
 services:
   postgres:
-    image: postgres
+    image: postgres:latest
     environment:
-      POSTGRES_DB: Recordss
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: vikas123
+      POSTGRES_DB: Recordss
     ports:
       - "5432:5432"
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
   backend:
-    build: C:\Users\Anil\Desktop\vikabal\Interviewtask\InterviewTask\backend
+    image: interviewtask-backend
+    depends_on:
+      postgres:
+        condition: service_healthy
     environment:
       DATABASE_URL: postgres://postgres:vikas123@postgres:5432/Recordss
-      NODE_ENV: production
     ports:
       - "3001:3001"
-    depends_on:
-      - postgres
-    volumes:
-      - C:\Users\Anil\Desktop\vikabal\Interviewtask\InterviewTask\backend:/usr/src/app
-    container_name: backend-container
 
   frontend:
-    build: C:\Users\Anil\Desktop\vikabal\Interviewtask\InterviewTask\frontend
+    image: interviewtask-frontend
     ports:
-      - "3000:3000"
-    environment:
-      NODE_ENV: production
-    volumes:
-      - C:\Users\Anil\Desktop\vikabal\Interviewtask\InterviewTask\frontend:/usr/src/app
-    container_name: frontend-container
+      - "8080:80"
 
-volumes:
-  postgres_data:
+  nginx:
+    image: nginx:latest
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+    depends_on:
+      - frontend
+      - backend

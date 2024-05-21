@@ -1,24 +1,29 @@
+# Use a node.js base image
+FROM node:14 AS build
 
-FROM node:14
-
-# Create and change to the app directory.
+# Set working directory
 WORKDIR /app
 
-# Install app dependencies.
-COPY package*.json ./
+# Copy package.json and package-lock.json
+COPY frontend/package*.json ./
+
+# Install dependencies
 RUN npm install
 
-# Copy the rest of the application code.
-COPY . .
+# Copy the rest of the frontend code
+COPY frontend/ .
 
-# Build the React app
+# Build frontend
 RUN npm run build
 
-# Install serve to serve the build
-RUN npm install -g serve
+# Use nginx base image
+FROM nginx:alpine
 
-# Expose the frontend port
+# Copy build from previous stage to nginx
+COPY --from=build /app/build /usr/share/nginx/html
+
+# Expose port 80
 EXPOSE 3000
 
-# Serve the built app
-CMD ["serve", "-s", "build", "-l", "3000"]
+# Start nginx
+CMD ["nginx", "-g", "daemon off;"]

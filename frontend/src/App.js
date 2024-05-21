@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "./components/context/AuthContext";
 import Login from "./components/Auth/Login";
 import Signup from "./components/Auth/Signup";
@@ -10,7 +10,7 @@ import Navbar from "./components/Navbar";
 
 function App() {
   return (
-    <Router>
+    <BrowserRouter>
       <AuthProvider>
         <Navbar />
         <Routes>
@@ -18,13 +18,11 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/dashboard" element={<Dashboard />} />
-
           <Route path="/records" element={<RecordList />} />
-
           {/* Add more routes as needed */}
         </Routes>
       </AuthProvider>
-    </Router>
+    </BrowserRouter>
   );
 }
 

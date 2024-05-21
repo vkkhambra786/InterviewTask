@@ -1,21 +1,20 @@
-# Use the official Node.js image.
+# Use a node.js base image
 FROM node:14
 
-# Create and change to the app directory.
-WORKDIR /usr/src/app
+# Set working directory
+WORKDIR /app
 
-# Copy package.json and package-lock.json.
-COPY package*.json ./
+# Copy package.json and package-lock.json
+COPY backend/package*.json ./
 
-# Install dependencies.
+# Install dependencies
 RUN npm install
 
-# Copy the rest of the application code.
-COPY . .
+# Copy the rest of the backend code
+COPY backend/ .
 
-# Expose the application port.
+# Expose port 3001 (or any other port your backend runs on)
 EXPOSE 3001
 
-# Run the application.
-CMD ["node", "server.js"]
-
+# Start the backend
+CMD ["npm", "start"]
