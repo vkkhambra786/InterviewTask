@@ -1,29 +1,29 @@
-# Use a node.js base image
-FROM node:14 AS build
+# Use the official Node.js image as the base image
+FROM node:18-alpine as build
 
-# Set working directory
+# Create and set the working directory
 WORKDIR /app
 
 # Copy package.json and package-lock.json
-COPY frontend/package*.json ./
+COPY package*.json ./
 
-# Install dependencies
-RUN npm install
+# Install dependencies with npm cache and custom registry
+RUN npm config set registry http://registry.npmjs.org/ && npm install --prefer-offline --no-audit
 
 # Copy the rest of the frontend code
-COPY frontend/ .
+COPY . .
 
-# Build frontend
+# Build the frontend
 RUN npm run build
 
-# Use nginx base image
+# Use the official Nginx image to serve the frontend
 FROM nginx:alpine
 
-# Copy build from previous stage to nginx
+# Copy the build output to the Nginx HTML directory
 COPY --from=build /app/build /usr/share/nginx/html
 
 # Expose port 80
-EXPOSE 3000
+EXPOSE 80
 
-# Start nginx
+# Start Nginx
 CMD ["nginx", "-g", "daemon off;"]

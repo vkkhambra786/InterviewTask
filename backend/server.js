@@ -1,6 +1,3 @@
-
-
-
 const express = require("express");
 const argon2 = require("argon2");
 const jwt = require("jsonwebtoken");
@@ -14,8 +11,8 @@ require("dotenv").config();
 // Initialize Express app
 const app = express();
 app.use(bodyParser.json());
- 
-//app.use(cors())
+
+//app.use(cors());
 const allowedOrigins = ["http://localhost:3000", "http://localhost:8080"];
 app.use(
   cors({
@@ -92,7 +89,6 @@ app.post("/api/login", async (req, res) => {
     res.status(500).json({ error: "Internal server error" });
   }
 });
-
 
 const authenticateToken = (req, res, next) => {
   const authHeader = req.headers["authorization"];
@@ -209,5 +205,3 @@ app.delete("/api/records/:id", authenticateToken, async (req, res) => {
     res.status(500).json({ error: "Internal server error" });
   }
 });
-
- 
