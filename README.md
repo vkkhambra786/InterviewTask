@@ -1,13 +1,12 @@
 # InterviewTask
 First clone this repo inside have 2 folder frontend and backend.
 
-Then start docker and pg admin also
-Inside pg amdin create a datbase "Recordss" pls match it with .env file.
-
- run - 
- docker-compose up 
-  docker-compose up --build
-   
+Then start docker and pg admin 
+ 
+  run - 
+   docker-compose up --build
+   docker-compose up 
+    
   Then run  http://localhost:3000/ port 
   You can able to access our Project.
 
